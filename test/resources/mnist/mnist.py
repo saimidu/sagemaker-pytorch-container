@@ -197,8 +197,10 @@ def save_model(model, model_dir):
 def assert_can_track_sagemaker_experiments():
     in_sagemaker_training = 'TRAINING_JOB_ARN' in os.environ
     in_python_three = sys.version_info[0] == 3
+    torch_version = torch.__version__
+    minimum_version = ["1", "3", "1"]
 
-    if in_sagemaker_training and in_python_three:
+    if torch_version.split(".") >= minimum_version and in_sagemaker_training and in_python_three:
         import smexperiments.tracker
 
         with smexperiments.tracker.Tracker.load() as tracker:
